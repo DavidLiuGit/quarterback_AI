@@ -11,7 +11,7 @@ def nfl_build_season_passing_data(year):
 	"""Build QB Passing dataset from NFL boxscores, for a specified season"""
 
 	# get a list of all the teams that competed in the specified year
-	print(f"Gathering passing data for {year} NFL season...")
+	print(f"Gathering passing data for {year} NFL season:")
 	teams = Teams(str(year))
 
 	# init empty lists for input and output labels; these lists will be populated as matrices
@@ -112,4 +112,4 @@ if __name__=='__main__':
 	for year in year_list:
 		input_arr, label_arr = nfl_build_season_passing_data(year)
 		save_result_npy(input_arr, year, 'nfl_passing')
-		save_result_npy(input_arr, year, 'nfl_label')
+		save_result_npy(label_arr, year, 'nfl_label')
