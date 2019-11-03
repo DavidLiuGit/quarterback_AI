@@ -15,29 +15,33 @@ def visualize_data_from_file(input_file_name, label_file_name, input_axis, label
 	# sanity checks
 	print(X.shape, Y.shape)
 
-	# call visualize function
-	visualize_data(X, Y, input_axis, label_axis)
+	# extract the axes from the X & Y matrices
+	x = X[:,input_axis]
+	y = Y[:,label_axis]
 
+	# call visualize function
+	visualize_data(x,y)
 
 
 ###############################################################################
 ###### HELPER FUNCTIONS
 ###############################################################################
 
-def visualize_data(X, Y, x_axis, y_axis):
+def visualize_data(X, Y):
 	"""
 	Create a 2D plot of some input (X) and output (Y). 1 axis must be selected (by index number)
 	from both the X and Y matrices. Lengths of the selected axes must match
 	"""
-	plt.plot(X[x_axis], Y[y_axis])
+	plt.scatter(X, Y)
 	plt.show()
 
 
 
 if __name__=='__main__':
 	year = 2018
-	visualize_data_from_file(
-		f'nfl_passing_{year}.npy',
-		f'nfl_label_{year}.npy',
-		0, 0
-	)
+	for i in range(7):
+		visualize_data_from_file(
+			f'nfl_passing_{year}.npy',
+			f'nfl_label_{year}.npy',
+			i, 0
+		)

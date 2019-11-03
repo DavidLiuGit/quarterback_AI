@@ -37,7 +37,7 @@ def nfl_build_season_passing_data(year):
 			input_arr.append(nfl_build_game_passing_data(game))
 
 			# append a set of labels to label_arr list (matrix)
-			label_arr.append(nfl_build_game_labels)
+			label_arr.append(nfl_build_game_labels(game))
 
 		# increment progress bar
 		bar.next()
@@ -80,7 +80,7 @@ def nfl_build_game_labels(game):
 
 	return [
 		final_result_dict[game._result],				# game result
-		timestamp_to_seconds(game.time_of_possession),	# time of possession in seconds
+		# timestamp_to_seconds(game.time_of_possession),	# time of possession in seconds
 	]
 
 
@@ -94,7 +94,8 @@ def timestamp_to_seconds(timestamp):
 	Convert a timestamp in the `MM:SS` format to integer number of seconds
 	"""
 	time_components = timestamp.split(':')
-	return int(time_components[0]) * 60 + int(time_components[1])
+	total_seconds = int(time_components[0]) * 60 + int(time_components[1])
+	return total_seconds
 
 
 
@@ -103,12 +104,13 @@ def save_result_npy(data, year, file_prefix):
 	Convert matrix to numpy array and save it locally
 	"""
 	arr = np.array(data)
-	np.save(f"{file_prefix}_{year}.npy", data)
+	np.save(f"{file_prefix}_{year}.npy", arr)
 
 
 
 if __name__=='__main__':
 	year_list = [2018, 2017, 2016, 2015, 2014, 2013]
+
 	for year in year_list:
 		input_arr, label_arr = nfl_build_season_passing_data(year)
 		save_result_npy(input_arr, year, 'nfl_passing')
