@@ -73,9 +73,9 @@ def nfl_build_game_labels(game):
 	Build game labels list from a single instance of `sportsreference.nfl.schedule.Game`.
 	"""
 	final_result_dict = {
-		"L": -1,
-		"W": 1,
-		"T": 0
+		"L": 0.0,
+		"W": 1.0,
+		"T": 0.5
 	}
 
 	return [
@@ -111,7 +111,15 @@ def save_result_npy(data, year, file_prefix):
 if __name__=='__main__':
 	year_list = [2018, 2017, 2016, 2015, 2014, 2013]
 
+	passing_agg = []
+	label_agg = []
+
 	for year in year_list:
 		input_arr, label_arr = nfl_build_season_passing_data(year)
-		save_result_npy(input_arr, year, 'nfl_passing')
-		save_result_npy(label_arr, year, 'nfl_label')
+		passing_agg += input_arr
+		label_agg += label_arr
+		# save_result_npy(input_arr, year, 'data/nfl_passing')
+		# save_result_npy(label_arr, year, 'data/nfl_label')
+
+	save_result_npy(passing_agg, '6yrs', 'data/nfl_passing')
+	save_result_npy(label_agg, '6yrs', 'data/nfl_label')
